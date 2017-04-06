@@ -1,9 +1,10 @@
 'use strict';
-const messageQueueCount = 5;
+const maxNumberOfMessages = 5; 
 
 angular.module('acmeMessaging')
     .controller('MainController', ['$scope', 'menuService', function ($scope, menuService) {
 
+        $scope.messageQueueCount = 5;
         $scope.tab = 1;
         $scope.showButtons = false;
         $scope.filtText = '';
@@ -91,25 +92,25 @@ angular.module('acmeMessaging')
         templateUrl: '/views/directives/newborn-message.html'
     };
   }).filter('messageFilter', function () {
-  return function (items, messageType, messagesNumber) {
+  return function (items, messageType, messagesNumber, processed) {
 
     var filtered = [];
 
     angular.forEach(items, function (value, key) {
-        if(value.type === messageType){
+        if(value.type === messageType && !processed){
             this.push(value);
         }
     }, filtered);
 
     if (messageType === '') {
-        return items.slice(0, messageQueueCount);
+        return items.slice(0, maxNumberOfMessages);
     }
 
-    if (messagesNumber > messageQueueCount) {
-        return filtered.slice(0, messageQueueCount);
+    if (messagesNumber > maxNumberOfMessages) {
+        return filtered.slice(0, maxNumberOfMessages);
     }
-    else if (messagesNumber > 0 && messagesNumber <= messageQueueCount) {
-        return filtered.slice(0, messageQueueCount);
+    else if (messagesNumber > 0 && messagesNumber <= maxNumberOfMessages) {
+        return filtered.slice(0, maxNumberOfMessages);
     } 
         
         

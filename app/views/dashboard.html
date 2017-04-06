@@ -22,7 +22,7 @@
                     <h3 class="panel-title"><span class="glyphicon glyphicon-inbox"></span> Message Queue</h3>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-group" ng-repeat="message in messages | messageFilter : filtText : 5">
+                    <ul class="list-group" ng-repeat="message in messages | messageFilter : filtText : messageQueueCount : false">
                         <li ng-show="showMessages" id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
                             <div class="row">
                                 <div class="col-xs-2 col-md-1">
