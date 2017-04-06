@@ -1,0 +1,84 @@
+<div class="container" style="background-color: #ddd; padding: 30px">
+
+<div bday-message></div>
+<div newborn-message></div>
+
+    <div class="row row-content" ng-controller="MainController">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="palm" role="presentation" ng-class="{active:isSelected(1)}">
+                <a ng-click="select(1)" aria-controls="all" role="tab">All Messages</a></li>
+            <li class="palm" role="presentation" ng-class="{active:isSelected(2)}">
+                <a ng-click="select(2)" aria-controls="birthday" role="tab">Birthday Messages</a></li>
+            <li class="palm" role="presentation" ng-class="{active:isSelected(3)}">
+                <a ng-click="select(3)" aria-controls="newborn" role="tab">Newborn Messages</a></li>
+        </ul>
+
+
+        <div class="tab-content col-xs-12 col-sm-12 tab-pane fade in active" style="background-color: white;">
+
+            <div class="panel panel-default widget col-xs-12 col-sm-5">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-inbox"></span> Message Queue</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group" ng-repeat="message in messages | limitTo: 5 | filter: filtText">
+                        <li ng-show="showMessages" id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1">
+                                    <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
+                                <div class="col-xs-10 col-md-11">
+                                    <div>
+                                        <a href="#">{{message.name}}</a>
+                                    </div>
+                                    <div class="comment-text">
+                                        {{message.title}}
+                                    </div>
+
+                                    <span ng-show="showButtons">
+                                    <a class="btn btn-sm btn-hover btn-primary" ng-click="proccessMessage(message.id, message.type)"><span class="glyphicon glyphicon-share-alt" style="padding-right:3px;"></span>Open</a>
+                                    <a class="btn btn-sm btn-hover btn-danger" ng-click="deleteMessage(message.id)"><span class="glyphicon glyphicon-remove" style="padding-right:3px;"></span>Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-show="!showMessages" class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-11">
+                                    <div class="comment-text">
+                                        No Messages at this time.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="panel panel-default widget col-xs-12 col-sm-5">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-folder-open"></span> Completed Messages</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-11">
+                                    <div class="comment-text">
+                                        No Messages at this time.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
