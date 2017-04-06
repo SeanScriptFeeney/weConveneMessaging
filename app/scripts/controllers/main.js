@@ -90,31 +90,60 @@ angular.module('acmeMessaging')
     return {
         templateUrl: '/views/directives/newborn-message.html'
     };
-  }).filter('messageFilter', function() {
-  return function( messages, messagesNumber, messageType) {
-    
-    if(messageType === ''){
-        return;
-    }
-    
+  }).filter('messageFilter', function () {
+  return function (items, messageType, messagesNumber) {
+
     var filtered = [];
-    angular.forEach(messages, function(item) {
-      if(messageType === item.type) {
-        filtered.push(item);
-      }
-    });
 
-    if(messagesNumber > messageQueueCount)
-    {
-        return filtered.slice(0, messageQueueCount-1);
-    } 
-    else if(messagesNumber > 0 && messagesNumber <= messageQueueCount)
-    {
-        return filtered.slice(0, messageQueueCount-1);
-    }else{
-        return;
+    angular.forEach(items, function (value, key) {
+        if(value.type === messageType){
+            this.push(value);
+        }
+    }, filtered);
+
+    if (messageType === '') {
+        return items.slice(0, messageQueueCount);
     }
 
+    if (messagesNumber > messageQueueCount) {
+        return filtered.slice(0, messageQueueCount);
+    }
+    else if (messagesNumber > 0 && messagesNumber <= messageQueueCount) {
+        return filtered.slice(0, messageQueueCount);
+    } 
+        
+        
     return filtered;
+
   };
 });
+  
+  
+//   .filter('messageFilter', function() {
+//   return function(messageType) {
+    
+//     var filtered = [];
+//     angular.forEach(items, function(item) {
+//       if(messageType === item.type) {
+//         filtered.push(item);
+//       }
+//     });
+
+//     if(messageType === ''){
+//         return filtered.slice(0, messageQueueCount-1);
+//     }
+
+//     if(messagesNumber > messageQueueCount)
+//     {
+//         return filtered.slice(0, messageQueueCount-1);
+//     } 
+//     else if(messagesNumber > 0 && messagesNumber <= messageQueueCount)
+//     {
+//         return filtered.slice(0, messageQueueCount-1);
+//     }else{
+//         return;
+//     }
+
+//     return filtered;
+//   };
+// });
