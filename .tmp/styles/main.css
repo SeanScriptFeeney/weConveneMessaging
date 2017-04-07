@@ -1,0 +1,77 @@
+
+/*
+over-ride "Weak" message, show font in dark grey
+*/
+
+.progress-bar {
+    color: #333;
+} 
+
+/*
+Reference:
+http://www.bootstrapzen.com/item/135/simple-login-form-logo/
+*/
+
+* {
+	   box-sizing: border-box;
+	outline: none;
+}
+
+    .form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+	}
+
+.login-form {
+	margin-top: 60px;
+}
+
+form[role=login] {
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+	form[role=login] img {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 35px;
+	}
+	form[role=login] input,
+	form[role=login] button {
+		font-size: 18px;
+		margin: 16px 0;
+	}
+	form[role=login] > div {
+		text-align: center;
+	}
+	
+.form-links {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 50px;
+}
+.form-links a {
+		color: #fff;
+}
+
+.tab-content {
+  border-bottom: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  padding: 10px;
+}
+
+body {
+	background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.palm:hover{
+	cursor: pointer;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTs7RUFFRTs7QUFFRjtJQUNJLFlBQVk7Q0FDZjs7QUFFRDs7O0VBR0U7O0FBRUY7SUFHUyx1QkFBdUI7Q0FDL0IsY0FBYztDQUNkOztJQUVHO0dBQ0QsbUJBQW1CO0dBQ25CLGdCQUFnQjtHQUNoQixhQUFhO0dBQ2IsY0FBYztFQUNmOztBQUVGO0NBQ0MsaUJBQWlCO0NBQ2pCOztBQUVEO0NBQ0MsZUFBZTtDQUNmLG9CQUFvQjtDQUNwQixjQUFjO0NBQ2Qsb0JBQW9CO0NBQ3BCLHlCQUF5QjtDQUN6Qiw0QkFBNEI7Q0FDNUI7Q0FDQTtFQUNDLGVBQWU7RUFDZixlQUFlO0VBQ2Ysb0JBQW9CO0VBQ3BCO0NBQ0Q7O0VBRUMsZ0JBQWdCO0VBQ2hCLGVBQWU7RUFDZjtDQUNEO0VBQ0MsbUJBQW1CO0VBQ25COztBQUVGO0NBQ0MsbUJBQW1CO0NBQ25CLGdCQUFnQjtDQUNoQixvQkFBb0I7Q0FDcEI7QUFDRDtFQUNFLFlBQVk7Q0FDYjs7QUFFRDtFQUNFLGlDQUFpQztFQUNqQywrQkFBK0I7RUFDL0IsZ0NBQWdDO0VBQ2hDLGNBQWM7Q0FDZjs7QUFFRDtDQUNDLDhFQUE4RTtJQUkzRSx1QkFBdUI7Q0FDMUI7O0FBRUQ7Q0FDQyxnQkFBZ0I7Q0FDaEIiLCJmaWxlIjoibWFpbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbi8qXG5vdmVyLXJpZGUgXCJXZWFrXCIgbWVzc2FnZSwgc2hvdyBmb250IGluIGRhcmsgZ3JleVxuKi9cblxuLnByb2dyZXNzLWJhciB7XG4gICAgY29sb3I6ICMzMzM7XG59IFxuXG4vKlxuUmVmZXJlbmNlOlxuaHR0cDovL3d3dy5ib290c3RyYXB6ZW4uY29tL2l0ZW0vMTM1L3NpbXBsZS1sb2dpbi1mb3JtLWxvZ28vXG4qL1xuXG4qIHtcbiAgICAtd2Via2l0LWJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdCAgIC1tb3otYm94LXNpemluZzogYm9yZGVyLWJveDtcblx0ICAgICAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRvdXRsaW5lOiBub25lO1xufVxuXG4gICAgLmZvcm0tY29udHJvbCB7XG5cdCAgcG9zaXRpb246IHJlbGF0aXZlO1xuXHQgIGZvbnQtc2l6ZTogMTZweDtcblx0ICBoZWlnaHQ6IGF1dG87XG5cdCAgcGFkZGluZzogMTBweDtcblx0fVxuXG4ubG9naW4tZm9ybSB7XG5cdG1hcmdpbi10b3A6IDYwcHg7XG59XG5cbmZvcm1bcm9sZT1sb2dpbl0ge1xuXHRjb2xvcjogIzVkNWQ1ZDtcblx0YmFja2dyb3VuZDogI2YyZjJmMjtcblx0cGFkZGluZzogMjZweDtcblx0Ym9yZGVyLXJhZGl1czogMTBweDtcblx0LW1vei1ib3JkZXItcmFkaXVzOiAxMHB4O1xuXHQtd2Via2l0LWJvcmRlci1yYWRpdXM6IDEwcHg7XG59XG5cdGZvcm1bcm9sZT1sb2dpbl0gaW1nIHtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHRtYXJnaW46IDAgYXV0bztcblx0XHRtYXJnaW4tYm90dG9tOiAzNXB4O1xuXHR9XG5cdGZvcm1bcm9sZT1sb2dpbl0gaW5wdXQsXG5cdGZvcm1bcm9sZT1sb2dpbl0gYnV0dG9uIHtcblx0XHRmb250LXNpemU6IDE4cHg7XG5cdFx0bWFyZ2luOiAxNnB4IDA7XG5cdH1cblx0Zm9ybVtyb2xlPWxvZ2luXSA+IGRpdiB7XG5cdFx0dGV4dC1hbGlnbjogY2VudGVyO1xuXHR9XG5cdFxuLmZvcm0tbGlua3Mge1xuXHR0ZXh0LWFsaWduOiBjZW50ZXI7XG5cdG1hcmdpbi10b3A6IDFlbTtcblx0bWFyZ2luLWJvdHRvbTogNTBweDtcbn1cbi5mb3JtLWxpbmtzIGEge1xuXHRcdGNvbG9yOiAjZmZmO1xufVxuXG4udGFiLWNvbnRlbnQge1xuICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2RkZGRkZDtcbiAgYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjZGRkZGRkO1xuICBib3JkZXItcmlnaHQ6IDFweCBzb2xpZCAjZGRkZGRkO1xuICBwYWRkaW5nOiAxMHB4O1xufVxuXG5ib2R5IHtcblx0YmFja2dyb3VuZDogdXJsKGh0dHA6Ly9pLmltZ3VyLmNvbS9HSHIxMnNILmpwZykgbm8tcmVwZWF0IGNlbnRlciBjZW50ZXIgZml4ZWQ7XG4gICAgLXdlYmtpdC1iYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xuICAgIC1tb3otYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgICAtby1iYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xuICAgIGJhY2tncm91bmQtc2l6ZTogY292ZXI7XG59XG5cbi5wYWxtOmhvdmVye1xuXHRjdXJzb3I6IHBvaW50ZXI7XG59Il19 */
