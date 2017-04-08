@@ -8,16 +8,9 @@ angular.module('acmeMessaging', ['ui.router','ngResource'])
             .state('app', {
                 url:'/',
                 views: {
-                    'header': {
-                        templateUrl : 'views/header.html',
-                    },
                     'content': {
                         templateUrl : 'views/login.html',
-                        controller  : 'LoginController',
-                        controllerAs: 'login'
-                    },
-                    'footer': {
-                        templateUrl : 'views/footer.html',
+                        controller  : 'LoginController'
                     }
                 }
             })
@@ -26,10 +19,16 @@ angular.module('acmeMessaging', ['ui.router','ngResource'])
             .state('app.dashboard', {
                 url:'dashboard',
                 views: {
+                    'header@':{
+                        templateUrl : 'views/header.html',
+                    },
                     'content@': {
                         templateUrl : 'views/dashboard.html',
                         controller  : 'MainController',
                         controllerAs: 'main'                  
+                    },
+                    'footer@': {
+                        templateUrl : 'views/footer.html',
                     }
                 }
             })

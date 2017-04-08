@@ -1,8 +1,8 @@
 'use strict';
-const maxNumberOfMessages = 5; 
+const maxNumberOfMessages = 5;
 
 angular.module('acmeMessaging')
-    .controller('MainController', ['$scope', 'menuService', function ($scope, menuService) {
+    .controller('MainController', ['$scope', 'messageService', 'giftService', function ($scope, messageService, giftService) {
 
         $scope.messageQueueCount = 5;
         $scope.tab = 1;
@@ -33,7 +33,7 @@ angular.module('acmeMessaging')
         $scope.showMessages = false;
         $scope.loadingMessages = "Loading ...";
 
-        $scope.messages = menuService.getMessages().query(
+        $scope.messages = messageService.getMessages().query(
             function (response) {
 
                 if (Object.keys(response) > 0)
@@ -46,28 +46,65 @@ angular.module('acmeMessaging')
             function (response) {
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             });
+        $scope.giftTypeSelected = false;
+        $scope.giftSelected = false;
 
+        $scope.selectedGiftTypeChanged = function () {
+            
+            giftService.getGifts().query(
+            function (response) {
+
+                $scope.gifts = response;
+                $scope.giftTypeSelected = true
+            },
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            });
+        };
+
+        $scope.giftOptionChanged = function () {
+            $scope.giftSelected = true;
+        };   
+
+        $scope.messageProcessing = function () {
+            console.log("Processing Message");
+            $("#bdayModal").modal('toggle');
+        };   
 
         $scope.proccessMessage = function (id, type) {
 
-            if(type === "birthday"){
-                $("#messageModal").modal();
+            if (type === "birthday") {
+
+                messageService.getMessages().get({ id: id })
+                    .$promise.then(
+                    function (response) {
+
+                        $scope.name = "Sean";
+                        $("#bdayModal").modal();
+
+                    },
+                    function (response) {
+                        //$scope.dishMessage = "Error: " + response.status + " " + response.statusText;
+                    }
+                    );
+
+
             }
-            else if(type === "newborn"){
+            else if (type === "newborn") {
                 $("#newbornModal").modal();
             }
-            
+
             console.log("This is the message id: " + id + " type is: " + type)
         };
 
         $scope.deleteMessage = function (id) {
 
-            menuService.deleteMessage().delete({ id: id })
+            messageService.deleteMessage().delete({ id: id })
                 .$promise.then(
                 function (response) {
                     console.log("Deleted the message id: " + id)
 
-                    $scope.messages = menuService.getMessages().query(
+                    $scope.messages = messageService.getMessages().query(
                         function (response) {
                             $scope.messages = response;
                             $scope.showMessages = true;
@@ -83,68 +120,47 @@ angular.module('acmeMessaging')
                 );
         };
 
-    }]).directive('bdayMessage', function() {
-    return {
-        templateUrl: '/views/directives/bday-message.html'
-    };
-  }).directive('newbornMessage', function() {
-    return {
-        templateUrl: '/views/directives/newborn-message.html'
-    };
-  }).filter('messageFilter', function () {
-  return function (items, messageType, messagesNumber, processed) {
+    }]).directive('bdayMessage', function () {
+        return {
+            templateUrl: '/views/directives/bday-message.html'
+        };
+    }).directive('newbornMessage', function () {
+        return {
+            templateUrl: '/views/directives/newborn-message.html'
+        };
+    }).filter('messageFilter', function () {
+        return function (items, messageType, messagesNumber, processed) {
 
-    var filtered = [];
+            var filtered = [];
 
-    angular.forEach(items, function (value, key) {
-        if(value.type === messageType && !processed){
-            this.push(value);
-        }
-    }, filtered);
+            if (!processed) {
+                angular.forEach(items, function (value, key) {
+                    if (value.type === messageType && value.gift === undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
 
-    if (messageType === '') {
-        return items.slice(0, maxNumberOfMessages);
-    }
+            } else if (processed) {
+                angular.forEach(items, function (value, key) {
+                    if (value.type === messageType && value.gift !== undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
+            }
 
-    if (messagesNumber > maxNumberOfMessages) {
-        return filtered.slice(0, maxNumberOfMessages);
-    }
-    else if (messagesNumber > 0 && messagesNumber <= maxNumberOfMessages) {
-        return filtered.slice(0, maxNumberOfMessages);
-    } 
-        
-        
-    return filtered;
+            if (messageType === '') {
+                return items.slice(0, maxNumberOfMessages);
+            }
 
-  };
-});
-  
-  
-//   .filter('messageFilter', function() {
-//   return function(messageType) {
-    
-//     var filtered = [];
-//     angular.forEach(items, function(item) {
-//       if(messageType === item.type) {
-//         filtered.push(item);
-//       }
-//     });
+            if (messagesNumber > maxNumberOfMessages) {
+                return filtered.slice(0, maxNumberOfMessages);
+            }
+            else if (messagesNumber > 0 && messagesNumber <= maxNumberOfMessages) {
+                return filtered.slice(0, maxNumberOfMessages);
+            }
 
-//     if(messageType === ''){
-//         return filtered.slice(0, messageQueueCount-1);
-//     }
 
-//     if(messagesNumber > messageQueueCount)
-//     {
-//         return filtered.slice(0, messageQueueCount-1);
-//     } 
-//     else if(messagesNumber > 0 && messagesNumber <= messageQueueCount)
-//     {
-//         return filtered.slice(0, messageQueueCount-1);
-//     }else{
-//         return;
-//     }
+            return filtered;
 
-//     return filtered;
-//   };
-// });
+        };
+    });

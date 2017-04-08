@@ -2,7 +2,7 @@
 
 angular.module('acmeMessaging')
     .constant("baseURL", "http://localhost:3000/")
-    .service('menuService', ['$resource', 'baseURL', function ($resource, baseURL) {
+    .service('messageService', ['$resource', 'baseURL', function ($resource, baseURL) {
 
         this.getMessages = function () {
             return $resource(baseURL + "messages/:id", null, { 'get': { method: 'GET' } });
