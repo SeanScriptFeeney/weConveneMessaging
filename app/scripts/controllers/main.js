@@ -131,36 +131,77 @@ angular.module('acmeMessaging')
     }).filter('messageFilter', function () {
         return function (items, messageType, messagesNumber, processed) {
 
-            var filtered = [];
 
-            if (!processed) {
-                angular.forEach(items, function (value, key) {
-                    if (value.type === messageType && value.gift === undefined) {
-                        this.push(value);
-                    }
-                }, filtered);
-
-            } else if (processed) {
-                angular.forEach(items, function (value, key) {
-                    if (value.type === messageType && value.gift !== undefined) {
-                        this.push(value);
-                    }
-                }, filtered);
-            }
-
-            if (messageType === '') {
+            if(messageType === "" && !processed){
                 return items.slice(0, maxNumberOfMessages);
             }
 
-            if (messagesNumber > maxNumberOfMessages) {
+            if (messageType === "" && processed) {
+
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.gift !== undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
+
                 return filtered.slice(0, maxNumberOfMessages);
+
             }
-            else if (messagesNumber > 0 && messagesNumber <= maxNumberOfMessages) {
+
+
+            if(messageType === "birthday" && !processed){
+
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.type === "birthday") {
+                        this.push(value);
+                    }
+                }, filtered);
+
                 return filtered.slice(0, maxNumberOfMessages);
+
+            }
+
+            if(messageType === "birthday" && processed){
+
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.type === "birthday" && value.gift !== undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
+
+                return filtered.slice(0, maxNumberOfMessages);
+
+            }
+
+            if(messageType === "newborn" && !processed){
+
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.type === "newborn") {
+                        this.push(value);
+                    }
+                }, filtered);
+
+                return filtered.slice(0, maxNumberOfMessages);
+
+            }
+
+            if(messageType === "newborn" && processed){
+
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.type === "newborn"  && value.gift !== undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
+
+                return filtered.slice(0, maxNumberOfMessages);
+
             }
 
 
-            return filtered;
+    }});
 
-        };
-    });
