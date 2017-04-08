@@ -9,6 +9,7 @@ angular.module('acmeMessaging')
         $scope.showButtons = false;
         $scope.filtText = '';
         $scope.messages = {};
+        $scope.messageToProccess = {};
         $scope.showMessages = false;
 
         $scope.isSelected = function (checkTab) {
@@ -33,7 +34,7 @@ angular.module('acmeMessaging')
         $scope.showMessages = false;
         $scope.loadingMessages = "Loading ...";
 
-        $scope.messages = messageService.getMessages().query(
+        messageService.getMessages().query(
             function (response) {
 
                 if (Object.keys(response) > 0)
@@ -51,6 +52,8 @@ angular.module('acmeMessaging')
 
         $scope.selectedGiftTypeChanged = function () {
             
+            $scope.messageToProccess.giftType = $scope.selectedGiftType;
+
             giftService.getGifts().query(
             function (response) {
 
@@ -64,14 +67,35 @@ angular.module('acmeMessaging')
 
         $scope.giftOptionChanged = function () {
             $scope.giftSelected = true;
+            
+            var gift = JSON.parse($scope.selectedGift);
+
+            $scope.messageToProccess.gift = gift;
+            
+            $scope.selectedGiftTitle = gift.title;
         };   
 
-        $scope.messageProcessing = function () {
+        $scope.proccessMessage = function () {
             console.log("Processing Message");
+
+            messageService.updateMessage().update({ id: $scope.messageToProccess.id }, $scope.messageToProccess);
             $("#bdayModal").modal('toggle');
+            
+            //refresh message objects
+            messageService.getMessages().query(
+            function (response) {
+
+                $scope.messages = response;
+            },
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            });
+            
+
+            
         };   
 
-        $scope.proccessMessage = function (id, type) {
+        $scope.completeMessage = function (id, type) {
 
             if (type === "birthday") {
 
@@ -79,7 +103,11 @@ angular.module('acmeMessaging')
                     .$promise.then(
                     function (response) {
 
-                        $scope.name = "Sean";
+                        $scope.messageToProccess.id = response.id;
+                        $scope.messageToProccess.name = response.name;
+                        $scope.messageToProccess.title = response.title;
+                        $scope.messageToProccess.type = response.type;
+                        $scope.name = response.name;
                         $("#bdayModal").modal();
 
                     },
@@ -133,7 +161,14 @@ angular.module('acmeMessaging')
 
 
             if(messageType === "" && !processed){
-                return items.slice(0, maxNumberOfMessages);
+                var filtered = [];
+                angular.forEach(items, function (value, key) {
+                    if (value.gift === undefined) {
+                        this.push(value);
+                    }
+                }, filtered);
+
+                return filtered.slice(0, maxNumberOfMessages);
             }
 
             if (messageType === "" && processed) {
