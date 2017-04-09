@@ -1,49 +1,56 @@
-<div id="bdayModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
+<div class="modal fade" id="birthdayModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+           <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Process Birthday Message </h4>
+                <h4 class="modal-title">Processing Birthday Message</h4>
             </div>
             <div class="modal-body">
-                <form ng-submit="proccessMessage()">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
+                
+                <form class="form-horizontal" name="birthdayForm" ng-submit="proccessMessage()" novalidate>
+
+                    <div class="form-group">
+                        <label for="telnum" class="col-sm-2 control-label">Full Name</label>
+                        <div class="col-xs-5 col-sm-4 col-md-3">
                             <p class="form-control-static">{{name}}</p>
                         </div>
+
                     </div>
-                    <div class="form-group row">
-                        <label class="mr-sm-2" for="inlineFormCustomSelect">Gift Type</label>
-                        <select ng-model="selectedGiftType" ng-change="selectedGiftTypeChanged()" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-                        <option value="" selected>---Please select---</option>
-                        <option value="normal">Normal Gift</option>
-                        <option value="special">Special Gift</option>
-                    </select>
-                    </div>
-                    <div ng-show="giftTypeSelected" class="form-group row">
-                        <label class="mr-sm-2" for="selectGift">Select Gift</label>
-                        <select ng-model="selectedGift" ng-change="giftOptionChanged()" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="selectGift">
-                        <option value="">--Please Select--</option>
-                        <option ng-repeat="gift in gifts"  value="{{gift}}">{{gift.title}}</option>
-                    </select>
-                    </div>
-                    <div ng-show="giftSelected" class="form-group row">
-                        <label class="col-sm-2 col-form-label">Message Text</label>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Gift Type</label>
+                        <div class="col-xs-5 col-sm-4 col-md-3">
+                            <div class="input-group">
+                                <select class="selectpicker" ng-model="selectedGiftType" ng-change="selectedGiftTypeChanged()" id="inlineFormCustomSelect">
+                                    <option value="" selected>---Please select---</option>
+                                    <option value="normal">Normal Gift</option>
+                                    <option value="special">Special Gift</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div ng-show="giftTypeSelected" class="col-xs-7 col-sm-6 col-md-7">
+                            <label>Select Gift</label>
+                                <select class="selectpicker" ng-model="selectedGift" ng-change="giftOptionChanged()" id="selectGift">
+                                <option value="">--Please Select--</option>
+                                <option ng-repeat="gift in gifts | filter: messageToProccess.giftType"  value="{{gift}}">{{gift.title}}</option>
+                            </select>
+                        </div>
+                    </div>                     
+                    <div ng-show="giftSelected" class="form-group">
+                        <label for="feedback" class="col-sm-2 control-label">Message:</label>
                         <div class="col-sm-10">
                             <p class="form-control-static">'Mate, Happy Birthday. To celebrate this once a year
-                                                    occasion we have picked the following gift: {{selectedGiftTitle}}. Enjoy.'</p>
+                            occasion we have picked the following gift: {{selectedGiftTitle}}. Enjoy.'</p>
+                            <img src="/{{selectedGiftImage}}" alt="{{selectedGiftName}}" style="max-width: 100px;">
+                        </div>
+                    </div> 
+                    <div class="form-group text-right">
+                        <div class="col-sm-offset-2 col-sm-10">
+
+                        <input type="button" value="Cancel" class="btn btn-default" data-dismiss="modal">
+                        <input type="submit" id="submit" value="Proccess" class="btn btn-primary" />
                         </div>
                     </div>
-
-                    <div ng-show="giftSelected" class="form-group text-right">
-                        <p type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</p>
-                        <input type="submit" id="submit" value="Proccess" class="btn btn-info btn-sm" />
-                        </div>
-
                 </form>
-            </div>
         </div>
     </div>
-</div>

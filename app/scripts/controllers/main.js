@@ -10,7 +10,7 @@ angular.module('acmeMessaging')
         $scope.filtText = '';
         $scope.messages = {};
         $scope.messageToProccess = {};
-        $scope.showMessages = false;
+        $scope.showMessages = true;
 
         $scope.isSelected = function (checkTab) {
             return ($scope.tab === checkTab);
@@ -30,8 +30,6 @@ angular.module('acmeMessaging')
             }
         };
 
-
-        $scope.showMessages = false;
         $scope.loadingMessages = "Loading ...";
 
         messageService.getMessages().query(
@@ -41,8 +39,6 @@ angular.module('acmeMessaging')
                     showMessages = true;
 
                 $scope.messages = response;
-                $scope.showMessages = true;
-                Object.keys($scope.messages).length;
             },
             function (response) {
                 $scope.message = "Error: " + response.status + " " + response.statusText;
@@ -73,19 +69,28 @@ angular.module('acmeMessaging')
             $scope.messageToProccess.gift = gift;
             
             $scope.selectedGiftTitle = gift.title;
+            $scope.selectedGiftName = gift.name;
+            $scope.selectedGiftImage = gift.image;
         };   
 
         $scope.proccessMessage = function () {
             console.log("Processing Message");
 
             messageService.updateMessage().update({ id: $scope.messageToProccess.id }, $scope.messageToProccess);
-            $("#bdayModal").modal('toggle');
-            
+             
+              
             //refresh message objects
             messageService.getMessages().query(
             function (response) {
 
                 $scope.messages = response;
+                $("#birthdayModal").modal('toggle');
+                $scope.messageToProccess = {};
+                $scope.selectedGiftType = "";
+                $scope.selectedGift = "";
+                $scope.giftTypeSelected = false;
+                $scope.giftSelected = false;
+                $scope.birthdayForm.$setPristine();
             },
             function (response) {
                 $scope.message = "Error: " + response.status + " " + response.statusText;
@@ -108,7 +113,7 @@ angular.module('acmeMessaging')
                         $scope.messageToProccess.title = response.title;
                         $scope.messageToProccess.type = response.type;
                         $scope.name = response.name;
-                        $("#bdayModal").modal();
+                        $("#birthdayModal").modal();
 
                     },
                     function (response) {
@@ -135,7 +140,6 @@ angular.module('acmeMessaging')
                     $scope.messages = messageService.getMessages().query(
                         function (response) {
                             $scope.messages = response;
-                            $scope.showMessages = true;
                         },
                         function (response) {
                             $scope.message = "Error: " + response.status + " " + response.statusText;
@@ -158,7 +162,6 @@ angular.module('acmeMessaging')
         };
     }).filter('messageFilter', function () {
         return function (items, messageType, messagesNumber, processed) {
-
 
             if(messageType === "" && !processed){
                 var filtered = [];
@@ -189,7 +192,7 @@ angular.module('acmeMessaging')
 
                 var filtered = [];
                 angular.forEach(items, function (value, key) {
-                    if (value.type === "birthday") {
+                    if (value.type === "birthday" && value.gift === undefined) {
                         this.push(value);
                     }
                 }, filtered);
@@ -215,7 +218,7 @@ angular.module('acmeMessaging')
 
                 var filtered = [];
                 angular.forEach(items, function (value, key) {
-                    if (value.type === "newborn") {
+                    if (value.type === "newborn" && value.gift === undefined ) {
                         this.push(value);
                     }
                 }, filtered);
