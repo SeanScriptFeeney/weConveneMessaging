@@ -4,6 +4,8 @@
 <div class="row row-content" ng-controller="MainController">
 <div bday-message></div>
 <div newborn-message></div>
+<div newborn-read-message></div>
+<div birthday-read-message></div>
 
         <ul class="nav nav-tabs" role="tablist">
             <li class="palm" role="presentation" ng-class="{active:isSelected(1)}">
@@ -78,6 +80,7 @@
                                     </div>
                                     <div class="text-right">
                                     <span ng-show="showButtons">
+                                        <a class="btn btn-sm btn-hover btn-primary" ng-click="previewMessage(message.id, message.type)"><span class="glyphicon glyphicon-share-alt" style="padding-right:3px;"></span>Preview</a>
                                     <a class="btn btn-sm btn-hover btn-danger" ng-click="deleteMessage(message.id)"><span class="glyphicon glyphicon-remove" style="padding-right:3px;"></span>Delete</a>
                                     </span></div>
                                 </div>

@@ -3,7 +3,7 @@
 describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('angularExampleApp'));
+  beforeEach(module('acmeMessaging'));
 
   var AboutCtrl,
     scope;
@@ -18,6 +18,6 @@ describe('Controller: AboutCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(AboutCtrl.awesomeThings.length).toBe(3);
+    expect(AboutCtrl.awesomeThings[0]).toBe("HTML5 Boilerplate");
   });
 });
