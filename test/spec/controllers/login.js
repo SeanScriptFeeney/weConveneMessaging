@@ -48,7 +48,7 @@ describe('LoginController', function() {
    });
 
 
-    it('should  not get credentials', function() {
+    it('should fail getting credentials', function() {
      var controller = createController();
 
 

@@ -97,28 +97,8 @@ angular.module('acmeMessaging')
 
         $scope.completeMessage = function (id, type) {
 
-            if (type === "birthday") {
 
-                messageService.getMessages().get({ id: id })
-                    .$promise.then(
-                    function (response) {
-
-                        $scope.messageToProccess.id = response.id;
-                        $scope.messageToProccess.index = $scope.messages.map(function (d) { return d['id']; }).indexOf(response.id);
-                        $scope.messageToProccess.name = response.name;
-                        $scope.messageToProccess.title = response.title;
-                        $scope.messageToProccess.type = response.type;
-                        $scope.name = response.name;
-                        $("#birthdayModal").modal();
-
-                    },
-                    function (response) {
-                        //$scope.dishMessage = "Error: " + response.status + " " + response.statusText;
-                    }
-                    );
-            }
-            else if (type === "newborn") {
-
+            if (type === "newborn") {
                 nameService.getNames().query(
                     function (response) {
                         $scope.childNames = response;
@@ -126,25 +106,25 @@ angular.module('acmeMessaging')
                     function (response) {
                     }
                 );
-
-                messageService.getMessages().get({ id: id })
-                    .$promise.then(
-                    function (response) {
-
-                        $scope.messageToProccess.id = response.id;
-                        $scope.messageToProccess.index = $scope.messages.map(function (d) { return d['id']; }).indexOf(response.id);
-                        $scope.messageToProccess.name = response.name;
-                        $scope.messageToProccess.title = response.title;
-                        $scope.messageToProccess.type = response.type;
-                        $scope.name = response.name;
-                        $("#newbornModal").modal();
-
-                    },
-                    function (response) {
-                        //$scope.dishMessage = "Error: " + response.status + " " + response.statusText;
-                    }
-                    );
             }
+
+            messageService.getMessages().get({ id: id })
+                .$promise.then(
+                function (response) {
+
+                    $scope.messageToProccess.id = response.id;
+                    $scope.messageToProccess.index = $scope.messages.map(function (d) { return d['id']; }).indexOf(response.id);
+                    $scope.messageToProccess.name = response.name;
+                    $scope.messageToProccess.title = response.title;
+                    $scope.messageToProccess.type = response.type;
+                    $scope.name = response.name;
+                    $("#"+ type + "modal").modal();
+
+                },
+                function (response) {
+                }
+                );
+
         };
 
         $scope.deleteMessage = function (id) {
@@ -152,19 +132,14 @@ angular.module('acmeMessaging')
             messageService.deleteMessage().delete({ id: id })
                 .$promise.then(
                 function (response) {
-                    console.log("Deleted the message id: " + id)
-
-                    $scope.messages = messageService.getMessages().query(
+                    messageService.getMessages().query(
                         function (response) {
                             $scope.messages = response;
                         },
                         function (response) {
-                            // $scope.message = "Error: " + response.status + " " + response.statusText;
                         });
-
                 },
                 function (response) {
-                    //$scope.dishMessage = "Error: " + response.status + " " + response.statusText;
                 }
                 );
         };
@@ -188,7 +163,6 @@ angular.module('acmeMessaging')
 
                 },
                 function (response) {
-                    //$scope.dishMessage = "Error: " + response.status + " " + response.statusText;
                 }
                 );
         };

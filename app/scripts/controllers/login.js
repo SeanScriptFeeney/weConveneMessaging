@@ -22,7 +22,6 @@ angular.module('acmeMessaging')
                     }, $scope.users);
 
                     if ($scope.users.length === 0) {
-                        window.alert("Incorrect login credentials!!")
                         $location.path("/");
                     }
 

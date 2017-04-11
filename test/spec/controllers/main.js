@@ -1,148 +1,239 @@
-// describe('Controller: MenuController', function () {
+// testing controller
+describe('MainController', function () {
+    var $httpBackend, $rootScope, createController;
 
-//   // load the controller's module
-//   beforeEach(module('acmeMessaging'));
+    // Set up the module
+    beforeEach(module('acmeMessaging'));
 
-//   var MainController, scope, $httpBackend;
+    beforeEach(inject(function ($injector) {
+        // Set up the mock http service responses
+        $httpBackend = $injector.get('$httpBackend');
 
-//   // Initialize the controller and a mock scope
-//   beforeEach(inject(function ($controller, _$httpBackend_,  $rootScope, messageService) {
+        // Get hold of a scope (i.e. the root scope)
+        $rootScope = $injector.get('$rootScope');
+        // The $controller service is used to create instances of controllers
+        var $controller = $injector.get('$controller');
 
-//           // place here mocked dependencies
-//       $httpBackend = _$httpBackend_;
+        $httpBackend.expectGET("http://localhost:3000/messages").respond(
+            [
+                {
+                    "id": 3,
+                    "index": 0,
+                    "name": "Sean Feeney",
+                    "title": "Congradulations on your new born! No3",
+                    "type": "newborn",
+                    "babyName": {
+                        "id": 0,
+                        "name": "Hugo"
+                    },
+                    "selectedDate": "2017-04-09T16:00:00.000Z"
+                },
+                {
+                    "id": 4,
+                    "index": 1,
+                    "name": "John Feeney",
+                    "title": "Happy Birthday to you! Testiing 2",
+                    "type": "birthday"
+                },
+                {
+                    "id": 5,
+                    "index": 2,
+                    "name": "John Smith",
+                    "title": "Happy Birthday to you!",
+                    "type": "birthday",
+                    "giftType": "special",
+                    "gift": {
+                        "id": 1,
+                        "title": "Rolex",
+                        "image": "images/rolex.jpg",
+                        "type": "special"
+                    },
+                    "selectedDate": "2017-04-09T16:00:00.000Z"
+                },
+                {
+                    "id": 6,
+                    "index": 1,
+                    "name": "Peter Taylor",
+                    "title": "Congradulations on your new born!",
+                    "type": "newborn"
+                }
+            ]);
 
-//       $httpBackend.expectGET("http://localhost:3000/dishes").respond([
-//   {
-//     "id": 3,
-//     "index": 0,
-//     "name": "Sean Feeney",
-//     "title": "Congradulations on your new born! No3",
-//     "type": "newborn",
-//     "babyName": {
-//       "id": 0,
-//       "name": "Hugo"
-//     },
-//     "selectedDate": "2017-04-09T16:00:00.000Z"
-//   },
-//   {
-//     "id": 4,
-//     "index": 1,
-//     "name": "John Feeney",
-//     "title": "Happy Birthday to you! Testiing 2",
-//     "type": "birthday"
-//   },
-//   {
-//     "id": 5,
-//     "index": 2,
-//     "name": "John Smith",
-//     "title": "Happy Birthday to you!",
-//     "type": "birthday",
-//     "giftType": "special",
-//     "gift": {
-//       "id": 1,
-//       "title": "Rolex",
-//       "image": "images/rolex.jpg",
-//       "type": "special"
-//     },
-//     "selectedDate": "2017-04-09T16:00:00.000Z"
-//   },
-//   {
-//     "id": 6,
-//     "index": 1,
-//     "name": "Peter Taylor",
-//     "title": "Congradulations on your new born!",
-//     "type": "newborn"
-//   },
-//   {
-//     "id": 8,
-//     "index": 4,
-//     "name": "Peter Quinn",
-//     "title": "Congrats on the birth of your child!",
-//     "type": "newborn"
-//   },
-//   {
-//     "id": 9,
-//     "name": "Tim Donellan",
-//     "title": "Happy Birthday to you!",
-//     "type": "birthday"
-//   },
-//   {
-//     "id": 11,
-//     "name": "Bernadette Feeney",
-//     "title": "Congrats on the birth of your child!",
-//     "type": "newborn"
-//   },
-//   {
-//     "id": 12,
-//     "name": "Stephen Feeney",
-//     "title": "Congrats on the birth of your child!",
-//     "type": "newborn"
-//   },
-//   {
-//     "id": 13,
-//     "index": 8,
-//     "name": "Michael Feeney",
-//     "title": "Happy Birthday to you!",
-//     "type": "birthday"
-//   },
-//   {
-//     "id": 14,
-//     "name": "John Doe",
-//     "title": "Happy Birthday!",
-//     "type": "birthday"
-//   },
-//   {
-//     "id": 15,
-//     "name": "James Fathery",
-//     "title": "Congrats on the birth of your child!",
-//     "type": "newborn"
-//   },
-//   {
-//     "id": 16,
-//     "name": "Sean Curran",
-//     "title": "Happy Birthday!",
-//     "type": "birthday"
-//   }
-// ]);
+        var MainController = $controller('MainController', { '$scope': $rootScope });
+        $httpBackend.flush();
+       
+    }));
 
-//     scope = $rootScope.$new();
-//     MainController = $controller('MainController', {
-//       $scope: scope, messageService: messageService
-//     });
-//             $httpBackend.flush();
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
 
-//   }));
 
-//   it('should have 12 messages', function () {
+    it('tab should be 1 ', function () {
+        expect($rootScope.tab).toBe(1);
+    });
 
-//     expect(scope.messages.length).toBe(12);
+    it('scope.messages.length should be 4 ', function () {
+        expect($rootScope.messages.length).toBe(4);
+    });
 
-//   });
+    it('scope.messages first message name should be Sean Feeney', function () {
+        expect($rootScope.messages.length).toBe(4);
+    });
 
-//   // it('should create "dishes" with 2 dishes fetched from xhr', function(){
+    it('should check $scope.tab value is selected', function () {
 
-//   //     expect(scope.showMenu).toBeTruthy();
-//   //     expect(scope.dishes).toBeDefined();
-//   //     expect(scope.dishes.length).toBe(2);
+        var isSelected = $rootScope.isSelected(1);
+        expect(isSelected).toBeTruthy();
+    });
 
-//   // });
+    it('should check $scope.tab value is not selected', function () {
 
-//   // it('should have the correct data order in the dishes', function() {
+        var isSelected = $rootScope.isSelected(2);
+        expect(isSelected).toBeFalsy();
+    });
 
-//   //     expect(scope.dishes[0].name).toBe("Uthapizza");
-//   //     expect(scope.dishes[1].label).toBe("New");
+    it('should change the tab value', function () {
 
-//   // });
+        $rootScope.select(2);
+        expect($rootScope.tab).toBe(2);
+    });
 
-//   // it('should change the tab selected based on tab clicked', function(){
+    it('should change the name of the baby selected', function () {
 
-//   //     expect(scope.tab).toEqual(1);
+        $rootScope.selectedName = '{ "id": 11, "name": "Aoife" }';
+        $rootScope.selectedNameChanged();
+        expect($rootScope.messageToProccess.babyName).toBe($rootScope.childNameSelected);
+    });
 
-//   //     scope.select(3);
+    it('should get gifts and set $scope.gifts', function () {
 
-//   //     expect(scope.tab).toEqual(3);
-//   //     expect(scope.filtText).toEqual('mains');
+        $httpBackend.expectGET("http://localhost:3000/gifts").respond([
+            {
+                "id": 0,
+                "title": "Teddy Bear",
+                "image": "images/teddy.jpg",
+                "type": "normal"
+            },
+            {
+                "id": 1,
+                "title": "Rolex",
+                "image": "images/rolex.jpg",
+                "type": "special"
+            },
+            {
+                "id": 2,
+                "title": "Holday to Rome!",
+                "image": "images/rome.jpg",
+                "type": "special"
+            }]);
 
-//   // });
+        $rootScope.selectedGiftTypeChanged();
+        
+        $httpBackend.flush();
 
-// });
+        expect($rootScope.gifts.length).toBe(3);
+    });
+
+    it('should get a specific birthday related messages', function () {
+
+        var id = 4;
+        var type = "birthday";
+
+        $httpBackend.expectGET("http://localhost:3000/messages/"+id).respond(
+            {
+                "id": 4,
+                "index": 1,
+                "name": "John Feeney",
+                "title": "Happy Birthday to you! Testiing 2",
+                "type": "birthday"
+            });
+
+        $rootScope.completeMessage(id, type);
+        
+        $httpBackend.flush();
+
+        expect($rootScope.messageToProccess.id).toBe(4);
+    });
+
+    it('should get a specific newborn related messages', function () {
+
+        var id = 3;
+        var type = "newborn";
+
+        $httpBackend.expectGET("http://localhost:3000/messages/"+id).respond(
+            {
+            "id": 3,
+            "index": 0,
+            "name": "Sean Feeney",
+            "title": "Congradulations on your new born! No3",
+            "type": "newborn",
+            "babyName": {
+                "id": 0,
+                "name": "Hugo"
+            },
+            "selectedDate": "2017-04-09T16:00:00.000Z"
+            }
+        );
+
+        $rootScope.completeMessage(id, type);
+        
+        $httpBackend.flush();
+
+        expect($rootScope.messageToProccess.id).toBe(3);
+    });
+
+    it('should remove a message from messages', function () {
+
+        var id = 6;
+        var initialMessageSize = $rootScope.messages.length;
+
+        $httpBackend.expectDELETE("http://localhost:3000/messages/"+id).respond({});
+
+        $httpBackend.expectGET("http://localhost:3000/messages").respond(
+            [
+                {
+                    "id": 3,
+                    "index": 0,
+                    "name": "Sean Feeney",
+                    "title": "Congradulations on your new born! No3",
+                    "type": "newborn",
+                    "babyName": {
+                        "id": 0,
+                        "name": "Hugo"
+                    },
+                    "selectedDate": "2017-04-09T16:00:00.000Z"
+                },
+                {
+                    "id": 4,
+                    "index": 1,
+                    "name": "John Feeney",
+                    "title": "Happy Birthday to you! Testiing 2",
+                    "type": "birthday"
+                },
+                {
+                    "id": 5,
+                    "index": 2,
+                    "name": "John Smith",
+                    "title": "Happy Birthday to you!",
+                    "type": "birthday",
+                    "giftType": "special",
+                    "gift": {
+                        "id": 1,
+                        "title": "Rolex",
+                        "image": "images/rolex.jpg",
+                        "type": "special"
+                    },
+                    "selectedDate": "2017-04-09T16:00:00.000Z"
+                }
+            ]);
+
+        $rootScope.deleteMessage(id);
+        
+        $httpBackend.flush();
+
+        expect($rootScope.messages.length).toBe(initialMessageSize - 1);
+    });
+
+});
