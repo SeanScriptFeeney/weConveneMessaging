@@ -226,11 +226,10 @@ angular.module('acmeMessaging')
 
                 var filtered = [];
                 angular.forEach(items, function (value, key) {
-                    if (value.type === "birthday" && (value.gift !== undefined || value.babyName !== undefined)) {
+                    if (value.type === "birthday" && value.gift !== undefined) {
                         this.push(value);
                     }
                 }, filtered);
-
                 return filtered.slice(0, 5);
             }
 
@@ -238,7 +237,7 @@ angular.module('acmeMessaging')
 
                 var filtered = [];
                 angular.forEach(items, function (value, key) {
-                    if (value.type === "newborn" && (value.gift === undefined || value.babyName === undefined)) {
+                    if (value.type === "newborn" && value.babyName !== undefined) {
                         this.push(value);
                     }
                 }, filtered);
@@ -250,7 +249,7 @@ angular.module('acmeMessaging')
 
                 var filtered = [];
                 angular.forEach(items, function (value, key) {
-                    if (value.type === "newborn" && (value.gift !== undefined || value.babyName !== undefined)) {
+                    if (value.type === "newborn" && value.babyName !== undefined) {
                         this.push(value);
                     }
                 }, filtered);

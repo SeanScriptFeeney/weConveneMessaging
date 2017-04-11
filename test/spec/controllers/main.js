@@ -69,7 +69,6 @@ describe('MainController', function () {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-
     it('tab should be 1 ', function () {
         expect($rootScope.tab).toBe(1);
     });
@@ -235,5 +234,65 @@ describe('MainController', function () {
 
         expect($rootScope.messages.length).toBe(initialMessageSize - 1);
     });
+
+    it('should preview a birthday message from messages', function () {
+
+        var id = 5;
+        var type = "birthday";
+
+        $httpBackend.expectGET("http://localhost:3000/messages/"+id).respond(
+                {
+                "id": 5,
+                "index": 2,
+                "name": "John Smith",
+                "title": "Happy Birthday to you!",
+                "type": "birthday",
+                "giftType": "special",
+                "gift": {
+                    "id": 1,
+                    "title": "Rolex",
+                    "image": "images/rolex.jpg",
+                    "type": "special"
+                },
+                "selectedDate": "2017-04-09T16:00:00.000Z"
+                }
+        );
+
+        $rootScope.previewMessage(id, type);
+
+        $httpBackend.flush();
+    
+        expect($rootScope.name).toBe("John Smith");
+    });
+
+    it('should preview a new born message from messages', function () {
+
+        var id = 5;
+        var type = "newborn";
+
+        $httpBackend.expectGET("http://localhost:3000/messages/"+id).respond(
+                {
+                    "id": 3,
+                    "index": 0,
+                    "name": "Sean Feeney",
+                    "title": "Congradulations on your new born! No3",
+                    "type": "newborn",
+                    "babyName": {
+                        "id": 0,
+                        "name": "Hugo"
+                    },
+                    "selectedDate": "2017-04-09T16:00:00.000Z"
+                }
+        );
+
+        $rootScope.previewMessage(id, type);
+
+        $httpBackend.flush();
+    
+        expect($rootScope.selectedDate).toBe("2017-04-09T16:00:00.000Z");
+    });
+
+
+    
 
 });
