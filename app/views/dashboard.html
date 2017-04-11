@@ -1,5 +1,5 @@
 <div class="container">
-<div style="background-color: #ddd; padding: 30px">
+<div class="dashboardStyle">
 
 <div class="row row-content" ng-controller="MainController">
 <div bday-message></div>
@@ -9,23 +9,35 @@
 
         <ul class="nav nav-tabs" role="tablist">
             <li class="palm" role="presentation" ng-class="{active:isSelected(1)}">
-                <a ng-click="select(1)" aria-controls="all" role="tab">All Messages</a></li>
+                <a id="allMessagesTab" ng-click="select(1)" aria-controls="all" role="tab">All Messages</a></li>
             <li class="palm" role="presentation" ng-class="{active:isSelected(2)}">
-                <a ng-click="select(2)" aria-controls="birthday" role="tab">Birthday Messages</a></li>
+                <a id="birthdaytab" ng-click="select(2)" aria-controls="birthday" role="tab">Birthday Messages</a></li>
             <li class="palm" role="presentation" ng-class="{active:isSelected(3)}">
-                <a ng-click="select(3)" aria-controls="newborn" role="tab">Newborn Messages</a></li>
+                <a id="newBornTab" ng-click="select(3)" aria-controls="newborn" role="tab">Newborn Messages</a></li>
         </ul>
 
 
-        <div class="tab-content col-xs-12 col-sm-12 tab-pane fade in active" style="background-color: white;">
+        <div class="tab-content col-xs-12 col-sm-12 tab-pane fade in active backgroundWhite">
 
             <div class="panel panel-default widget col-xs-12 col-sm-5">
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-inbox"></span> Message Queue</h3>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-group" ng-repeat="message in messages | messageFilter : filtText : messageQueueCount : false">
-                        <li ng-show="showMessages" id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
+                <ul ng-show="noMessages" class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-11">
+                                    <div class="comment-text">
+                                        No Messages at this time.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul ng-show="!noMessages" class="list-group" ng-repeat="message in messages | messageFilter : filtText : messageQueueCount : false">
+                        <li id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
                             <div class="row">
                                 <div class="col-xs-2 col-md-1">
                                     <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
@@ -45,17 +57,6 @@
                                 </div>
                             </div>
                         </li>
-                        <li ng-show="!showMessages" class="list-group-item">
-                            <div class="row">
-                                <div class="col-xs-10 col-md-11">
-                                    <div class="comment-text">
-                                        No Messages at this time.
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -67,7 +68,7 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group" ng-repeat="message in messages | messageFilter : filtText : messageQueueCount : true">
-                        <li ng-show="showMessages" id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
+                        <li id="{{message.id}}" class="list-group-item" ng-mouseenter="showButtons = true" ng-mouseleave="showButtons = false">
                             <div class="row">
                                 <div class="col-xs-2 col-md-1">
                                     <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
@@ -86,21 +87,9 @@
                                 </div>
                             </div>
                         </li>
-                        <li ng-show="!showMessages" class="list-group-item">
-                            <div class="row">
-                                <div class="col-xs-10 col-md-11">
-                                    <div class="comment-text">
-                                        No Messages at this time.
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

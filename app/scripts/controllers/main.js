@@ -6,8 +6,8 @@ angular.module('acmeMessaging')
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.messages = {};
-        $scope.messageToProccess = {};
-        $scope.showMessages = true;
+        $scope.messageToProcess = {};
+        $scope.noMessages = true;
         $scope.showNewBornMessage = false;
         $scope.giftTypeSelected = false;
         $scope.giftSelected = false;
@@ -33,13 +33,13 @@ angular.module('acmeMessaging')
         messageService.getMessages().query(
             function (response) {
 
-                if (Object.keys(response) > 0)
-                    showMessages = true;
+                if (response.length > 0)
+                        $scope.noMessages = false;
 
                 $scope.messages = response;
             },
             function (response) {
-                //$scope.message = "Error: " + response.status + " " + response.statusText;
+                $scope.noMessages = true;
             });
 
         $scope.selectedNameChanged = function () {
@@ -47,13 +47,13 @@ angular.module('acmeMessaging')
             var selectedname = JSON.parse($scope.selectedName);
 
             $scope.childNameSelected = selectedname;
-            $scope.messageToProccess.babyName = selectedname;
+            $scope.messageToProcess.babyName = selectedname;
         };
 
 
         $scope.selectedGiftTypeChanged = function () {
 
-            $scope.messageToProccess.giftType = $scope.selectedGiftType;
+            $scope.messageToProcess.giftType = $scope.selectedGiftType;
 
             giftService.getGifts().query(
                 function (response) {
@@ -62,7 +62,6 @@ angular.module('acmeMessaging')
                     $scope.giftTypeSelected = true
                 },
                 function (response) {
-                    //$scope.message = "Error: " + response.status + " " + response.statusText;
                 });
         };
 
@@ -71,7 +70,7 @@ angular.module('acmeMessaging')
 
             var gift = JSON.parse($scope.selectedGift);
 
-            $scope.messageToProccess.gift = gift;
+            $scope.messageToProcess.gift = gift;
             $scope.selectedGiftTitle = gift.title;
             $scope.selectedGiftName = gift.name;
             $scope.selectedGiftImage = gift.image;
@@ -79,18 +78,18 @@ angular.module('acmeMessaging')
 
         $scope.proccessMessage = function () {
             console.log("Processing Message");
-            $scope.messageToProccess.selectedDate = $scope.selectedDate;
+            $scope.messageToProcess.selectedDate = $scope.selectedDate;
 
-            messageService.updateMessage().update({ id: $scope.messageToProccess.id }, $scope.messageToProccess);
-            $scope.messages[$scope.messageToProccess.index] = $scope.messageToProccess;
+            messageService.updateMessage().update({ id: $scope.messageToProcess.id }, $scope.messageToProcess);
+            $scope.messages[$scope.messageToProcess.index] = $scope.messageToProcess;
 
-            if ($scope.messageToProccess.type === "birthday") {
+            if ($scope.messageToProcess.type === "birthday") {
                 $("#birthdayModal").modal('toggle');
             } else {
                 $("#newbornModal").modal('toggle');
             }
 
-            $scope.messageToProccess = {};
+            $scope.messageToProcess = {};
             $scope.showNewBornMessage = false;
 
         };
@@ -112,13 +111,13 @@ angular.module('acmeMessaging')
                 .$promise.then(
                 function (response) {
 
-                    $scope.messageToProccess.id = response.id;
-                    $scope.messageToProccess.index = $scope.messages.map(function (d) { return d['id']; }).indexOf(response.id);
-                    $scope.messageToProccess.name = response.name;
-                    $scope.messageToProccess.title = response.title;
-                    $scope.messageToProccess.type = response.type;
+                    $scope.messageToProcess.id = response.id;
+                    $scope.messageToProcess.index = $scope.messages.map(function (d) { return d['id']; }).indexOf(response.id);
+                    $scope.messageToProcess.name = response.name;
+                    $scope.messageToProcess.title = response.title;
+                    $scope.messageToProcess.type = response.type;
                     $scope.name = response.name;
-                    $("#"+ type + "modal").modal();
+                    $("#"+ type + "Modal").modal();
 
                 },
                 function (response) {
@@ -160,7 +159,6 @@ angular.module('acmeMessaging')
                         $scope.gift = response.gift;
                         $("#birthdayreadModal").modal();
                     }
-
                 },
                 function (response) {
                 }

@@ -1,3 +1,11 @@
+/**
+
+Styling for Acme Messaging App
+@author: seanscriptfeeney@gmail.com
+
+**/
+
+
 * {
     -webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
@@ -24,19 +32,19 @@ form[role=login] {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
-	form[role=login] img {
+form[role=login] img {
 		display: block;
 		margin: 0 auto;
 		margin-bottom: 35px;
 	}
-	form[role=login] input,
-	form[role=login] button {
+form[role=login] input,
+form[role=login] button {
 		font-size: 18px;
 		margin: 16px 0;
-	}
-	form[role=login] > div {
+}
+form[role=login] > div {
 		text-align: center;
-	}
+}
 	
 .form-links {
 	text-align: center;
@@ -60,6 +68,19 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.backgroundWhite{
+	background-color: white;
+}
+
+.dashboardStyle{
+	background-color: #ddd; 
+	padding: 30px
+}
+
+.padding40{
+	padding: 40px;
 }
 
 .palm:hover{

@@ -7,6 +7,7 @@ angular.module('acmeMessaging')
         //added these to speed up login process
         $scope.loginCredentials = { username: "seanscriptfeeney@gmail.com", password: "pass" };
         $scope.users = [];
+        $scope.invalidDetails = false;
 
         $scope.login = function () {
 
@@ -22,12 +23,14 @@ angular.module('acmeMessaging')
                     }, $scope.users);
 
                     if ($scope.users.length === 0) {
+                        $scope.invalidDetails = true;
                         $location.path("/");
                     }
 
                 },
                 function (response) {
                     $scope.errMessage = "Error: " + response.status + " " + response.statusText;
+                    $scope.invalidDetails = true;
                 });
         }
 

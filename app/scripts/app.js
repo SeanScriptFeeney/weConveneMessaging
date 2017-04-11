@@ -15,7 +15,7 @@ angular.module('acmeMessaging', ['ui.router','ngResource'])
                 }
             })
 
-            // route for the aboutus page
+            // route for the dashboard page
             .state('app.dashboard', {
                 url:'dashboard',
                 views: {

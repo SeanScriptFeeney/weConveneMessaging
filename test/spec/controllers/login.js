@@ -1,3 +1,5 @@
+'use strict';
+
 // testing controller
 describe('LoginController', function() {
    var $httpBackend, $rootScope, createController;

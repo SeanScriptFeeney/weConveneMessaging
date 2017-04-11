@@ -447,7 +447,7 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', [
+  grunt.registerTask('unit-test', [
     'clean:server',
     'wiredep',
     'concurrent:test',

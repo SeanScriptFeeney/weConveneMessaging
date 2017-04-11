@@ -1,3 +1,5 @@
+'use strict';
+
 // testing controller
 describe('MainController', function () {
     var $httpBackend, $rootScope, createController;
