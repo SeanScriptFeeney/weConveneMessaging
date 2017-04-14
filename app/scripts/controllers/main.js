@@ -44,7 +44,7 @@ angular.module('acmeMessaging')
 
         $scope.selectedNameChanged = function () {
 
-            var selectedname = JSON.parse($scope.selectedName);
+            let selectedname = JSON.parse($scope.selectedName);
 
             $scope.childNameSelected = selectedname;
             $scope.messageToProcess.babyName = selectedname;
@@ -68,7 +68,7 @@ angular.module('acmeMessaging')
         $scope.giftOptionChanged = function () {
             $scope.giftSelected = true;
 
-            var gift = JSON.parse($scope.selectedGift);
+            let gift = JSON.parse($scope.selectedGift);
 
             $scope.messageToProcess.gift = gift;
             $scope.selectedGiftTitle = gift.title;
@@ -185,7 +185,7 @@ angular.module('acmeMessaging')
         return function (items, messageType, messagesNumber, processed) {
 
             if (messageType === "" && !processed) {
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.gift === undefined && value.babyName === undefined) {
                         this.push(value);
@@ -197,7 +197,7 @@ angular.module('acmeMessaging')
 
             if (messageType === "" && processed) {
 
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.gift !== undefined || value.babyName !== undefined) {
                         this.push(value);
@@ -210,7 +210,7 @@ angular.module('acmeMessaging')
 
             if (messageType === "birthday" && !processed) {
 
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.type === "birthday" && value.gift === undefined) {
                         this.push(value);
@@ -222,7 +222,7 @@ angular.module('acmeMessaging')
 
             if (messageType === "birthday" && processed) {
 
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.type === "birthday" && value.gift !== undefined) {
                         this.push(value);
@@ -233,7 +233,7 @@ angular.module('acmeMessaging')
 
             if (messageType === "newborn" && !processed) {
 
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.type === "newborn" && value.babyName !== undefined) {
                         this.push(value);
@@ -245,7 +245,7 @@ angular.module('acmeMessaging')
 
             if (messageType === "newborn" && processed) {
 
-                var filtered = [];
+                let filtered = [];
                 angular.forEach(items, function (value, key) {
                     if (value.type === "newborn" && value.babyName !== undefined) {
                         this.push(value);
